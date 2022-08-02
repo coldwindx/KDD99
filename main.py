@@ -1,9 +1,14 @@
+# # 用于Google Drive的路径处理
+# import os
+# path = "/content/drive/MyDrive/KDD99"
+# os.chdir(path)
+# os.listdir(path)
+
 import torch
 import datasets
 import Net
 import trainer
 import utils
-import numpy as np
 
 import torch.nn
 import torch.optim
@@ -22,9 +27,6 @@ def init_weights(m):
 
 if __name__ == '__main__':
     logging.config.fileConfig(fname='./config/log.init', disable_existing_loggers=False)
-    log = logging.getLogger('system')
-    log.info('hello')
-    exit(0)
 
     train_loader = datasets.DataLoader(data)
     train_features, train_labels = train_loader.load(cover=False)

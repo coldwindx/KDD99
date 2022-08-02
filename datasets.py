@@ -1,10 +1,11 @@
-
-import math
 import os
 import csv
+import logging
 import numpy as np
 
 from enum import Enum, unique
+
+log = logging.getLogger('system')
 
 @unique
 class Procotol(Enum):
@@ -289,7 +290,7 @@ class DataLoader:
         return self.normalizate()
 
     def transform(self):
-        print('>>> Start property mapping ...')
+        log.info('>>> Start property mapping ...')
         # newline用于解决空行问题
         o_mid = open(self.mid, 'w', newline='')
         with open(self.src, 'r') as o_src:
@@ -302,10 +303,10 @@ class DataLoader:
                 csv_writer.writerow(line)
                 self.rows += 1
             o_mid.close()
-        print('>>> End property mapping ...')
+        log.info('>>> End property mapping ...')
 
     def normalizate(self):
-        print('>>> Start normalizating ...')
+        log.info('>>> Start normalizating ...')
         data = np.genfromtxt(self.mid, delimiter=',')
         features, labels = data[:,:-1], data[:, -1]
         dmax, dmin = np.max(features, axis=1), np.min(features, axis=1)
@@ -316,7 +317,7 @@ class DataLoader:
         o_dst = open(self.dst, 'w', newline='')
         csv_writer = csv.writer(o_dst)
         csv_writer.writerows(data.tolist())
-        print('>>> End normalizating ...')
+        log.info('>>> End normalizating ...')
         return (features, labels)
 
     @staticmethod

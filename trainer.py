@@ -1,9 +1,11 @@
-from tkinter import ALL
 import utils
 import torch
+import logging
 
 from abc import abstractclassmethod
 from typing import DefaultDict
+
+log = logging.getLogger('system')
 
 class Plugin():
     AFTER_ONE_BATCH_TRAIN   = 1
@@ -59,12 +61,12 @@ class AccuractPlugin(Plugin):
         metrics['test_accuracy'] = metrics['test_accuracy_sum'] / metrics['test_data_size']
         metrics['test_accuracy_sum'] = metrics['test_data_size'] = 0
     def after_one_epoch(self, metrics, epoch):
-        print(f'epoch: {epoch}, \
+        log.info(f'epoch: {epoch}, \
                 train_loss is {metrics["train_loss"]:.3f}, \
                 train_accuracy is {metrics["train_accuracy"]:.3f}, \
                 test_accuracy is {metrics["test_accuracy"]:.3f}')
     def before_return(self, metrics, timer, device):
-        print(f'{metrics["train_data_size_sum"] / timer.sum():.1f} examples/sec 'f'on {str(device)}')
+        log.info(f'{metrics["train_data_size_sum"] / timer.sum():.1f} examples/sec 'f'on {str(device)}')
 
 class Trainer:
     def __init__(self, net, optimizer, loss, device = 'cpu') -> None:
