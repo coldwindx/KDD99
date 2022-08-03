@@ -1,1 +1,23 @@
 2022-08-02 17:55:49,932 [INFO] main.py:26 hello -system
+2022-08-02 20:55:23,688 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-02 20:57:26,611 [INFO] datasets.py:306 >>> End property mapping ... -system
+2022-08-02 20:57:26,612 [INFO] datasets.py:309 >>> Start normalizating ... -system
+2022-08-02 21:00:11,643 [INFO] datasets.py:321 >>> End normalizating ... -system
+2022-08-02 21:02:12,202 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-02 21:04:20,243 [INFO] datasets.py:306 >>> End property mapping ... -system
+2022-08-02 21:04:20,245 [INFO] datasets.py:309 >>> Start normalizating ... -system
+2022-08-02 21:07:59,022 [INFO] datasets.py:321 >>> End normalizating ... -system
+2022-08-02 21:43:28,993 [INFO] datasets.py:360 >>> Start property mapping ... -system
+2022-08-02 21:44:27,474 [INFO] datasets.py:360 >>> Start property mapping ... -system
+2022-08-02 21:47:01,823 [INFO] datasets.py:360 >>> Start property mapping ... -system
+2022-08-02 21:48:32,257 [INFO] datasets.py:373 >>> End property mapping ... -system
+2022-08-02 21:49:13,368 [INFO] datasets.py:360 >>> Start property mapping ... -system
+2022-08-02 21:50:08,903 [INFO] datasets.py:373 >>> End property mapping ... -system
+2022-08-03 08:35:03,615 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-03 08:36:02,535 [INFO] datasets.py:306 >>> End property mapping ... -system
+2022-08-03 08:36:02,536 [INFO] datasets.py:309 >>> Start normalizating ... -system
+2022-08-03 08:36:38,197 [INFO] datasets.py:320 >>> End normalizating ... -system
+2022-08-03 10:14:43,336 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-03 10:15:38,525 [INFO] datasets.py:306 >>> End property mapping ... -system
+2022-08-03 10:15:38,526 [INFO] datasets.py:309 >>> Start normalizating ... -system
+2022-08-03 10:16:15,542 [INFO] datasets.py:320 >>> End normalizating ... -system

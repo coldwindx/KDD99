@@ -28,13 +28,13 @@ def init_weights(m):
 if __name__ == '__main__':
     logging.config.fileConfig(fname='./config/log.init', disable_existing_loggers=False)
 
-    train_loader = datasets.DataLoader(data)
+    train_loader = datasets.OneHotLoader(data)
     train_features, train_labels = train_loader.load(cover=False)
     ## 交叉熵要求标签类型为torch.long
     train_features = torch.from_numpy(train_features.reshape((-1, 1, 11, 11))).type(torch.float32)
     train_labels = torch.from_numpy(train_labels.reshape((-1, ))).type(torch.long)
 
-    test_loader = datasets.DataLoader(test)
+    test_loader = datasets.OneHotLoader(test)
     test_features, test_labels = test_loader.load(cover=False)
     test_features = torch.from_numpy(test_features.reshape((-1, 1, 11, 11))).type(torch.float32)
     test_labels = torch.from_numpy(test_labels.reshape((-1, ))).type(torch.long)
