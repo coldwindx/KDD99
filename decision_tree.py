@@ -10,10 +10,10 @@ test = './datasets/test'
 if __name__ == '__main__':
     logging.config.fileConfig(fname='./config/log.init', disable_existing_loggers=False)
 
-    train_loader = datasets.OneHotLoader(test)
+    train_loader = datasets.DataLoader(test)
     train_features, train_labels = train_loader.load(cover=False)
 
-    test_loader = datasets.OneHotLoader(test)
+    test_loader = datasets.DataLoader(test)
     test_features, test_labels = test_loader.load(cover=False)
 
     # 构造一棵多分类决策树

@@ -21,3 +21,49 @@
 2022-08-03 10:15:38,525 [INFO] datasets.py:306 >>> End property mapping ... -system
 2022-08-03 10:15:38,526 [INFO] datasets.py:309 >>> Start normalizating ... -system
 2022-08-03 10:16:15,542 [INFO] datasets.py:320 >>> End normalizating ... -system
+2022-08-03 18:34:42,727 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-03 18:36:10,652 [INFO] datasets.py:306 >>> End property mapping ... -system
+2022-08-03 18:36:10,653 [INFO] datasets.py:309 >>> Start normalizating ... -system
+2022-08-03 18:37:07,992 [INFO] datasets.py:320 >>> End normalizating ... -system
+2022-08-03 18:42:47,375 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-03 18:44:17,275 [INFO] datasets.py:306 >>> End property mapping ... -system
+2022-08-03 18:44:17,275 [INFO] datasets.py:309 >>> Start normalizating ... -system
+2022-08-03 18:45:34,969 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-03 18:47:42,615 [INFO] datasets.py:306 >>> End property mapping ... -system
+2022-08-03 18:47:42,616 [INFO] datasets.py:309 >>> Start normalizating ... -system
+2022-08-03 18:51:04,375 [INFO] datasets.py:320 >>> End normalizating ... -system
+2022-08-03 18:51:07,647 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-03 18:52:24,764 [INFO] datasets.py:306 >>> End property mapping ... -system
+2022-08-03 18:52:24,764 [INFO] datasets.py:309 >>> Start normalizating ... -system
+2022-08-03 18:54:01,072 [INFO] datasets.py:320 >>> End normalizating ... -system
+2022-08-03 18:55:57,724 [INFO] trainer.py:67 epoch: 1,                 train_loss is 0.966,                 train_accuracy is 0.955,                 test_accuracy is 0.801 -system
+2022-08-03 18:57:28,390 [INFO] trainer.py:67 epoch: 2,                 train_loss is 0.963,                 train_accuracy is 0.978,                 test_accuracy is 0.801 -system
+2022-08-03 18:59:07,717 [INFO] trainer.py:67 epoch: 3,                 train_loss is 0.943,                 train_accuracy is 0.983,                 test_accuracy is 0.801 -system
+2022-08-03 19:00:49,244 [INFO] trainer.py:67 epoch: 4,                 train_loss is 0.919,                 train_accuracy is 0.986,                 test_accuracy is 0.831 -system
+2022-08-03 19:02:33,988 [INFO] trainer.py:67 epoch: 5,                 train_loss is 0.918,                 train_accuracy is 0.986,                 test_accuracy is 0.804 -system
+2022-08-03 19:04:23,273 [INFO] trainer.py:67 epoch: 6,                 train_loss is 0.918,                 train_accuracy is 0.987,                 test_accuracy is 0.904 -system
+2022-08-03 19:06:16,929 [INFO] trainer.py:67 epoch: 7,                 train_loss is 0.918,                 train_accuracy is 0.987,                 test_accuracy is 0.802 -system
+2022-08-03 19:08:11,739 [INFO] trainer.py:67 epoch: 8,                 train_loss is 0.918,                 train_accuracy is 0.987,                 test_accuracy is 0.804 -system
+2022-08-03 19:10:07,172 [INFO] trainer.py:67 epoch: 9,                 train_loss is 0.917,                 train_accuracy is 0.987,                 test_accuracy is 0.835 -system
+2022-08-03 19:12:05,593 [INFO] trainer.py:67 epoch: 10,                 train_loss is 0.915,                 train_accuracy is 0.988,                 test_accuracy is 0.851 -system
+2022-08-03 19:13:56,868 [INFO] trainer.py:67 epoch: 11,                 train_loss is 0.914,                 train_accuracy is 0.990,                 test_accuracy is 0.912 -system
+2022-08-03 19:15:47,901 [INFO] trainer.py:67 epoch: 12,                 train_loss is 0.914,                 train_accuracy is 0.990,                 test_accuracy is 0.900 -system
+2022-08-03 19:17:38,572 [INFO] trainer.py:67 epoch: 13,                 train_loss is 0.913,                 train_accuracy is 0.991,                 test_accuracy is 0.912 -system
+2022-08-03 19:19:32,637 [INFO] trainer.py:67 epoch: 14,                 train_loss is 0.914,                 train_accuracy is 0.991,                 test_accuracy is 0.907 -system
+2022-08-03 19:21:28,228 [INFO] trainer.py:67 epoch: 15,                 train_loss is 0.913,                 train_accuracy is 0.992,                 test_accuracy is 0.912 -system
+2022-08-03 19:23:22,140 [INFO] trainer.py:67 epoch: 16,                 train_loss is 0.913,                 train_accuracy is 0.992,                 test_accuracy is 0.913 -system
+2022-08-03 19:25:15,528 [INFO] trainer.py:67 epoch: 17,                 train_loss is 0.913,                 train_accuracy is 0.992,                 test_accuracy is 0.913 -system
+2022-08-03 19:27:07,335 [INFO] trainer.py:67 epoch: 18,                 train_loss is 0.914,                 train_accuracy is 0.991,                 test_accuracy is 0.904 -system
+2022-08-03 19:29:03,643 [INFO] trainer.py:67 epoch: 19,                 train_loss is 0.914,                 train_accuracy is 0.991,                 test_accuracy is 0.897 -system
+2022-08-03 19:30:56,543 [INFO] trainer.py:67 epoch: 20,                 train_loss is 0.914,                 train_accuracy is 0.991,                 test_accuracy is 0.811 -system
+2022-08-03 19:32:58,390 [INFO] trainer.py:67 epoch: 21,                 train_loss is 0.913,                 train_accuracy is 0.991,                 test_accuracy is 0.911 -system
+2022-08-03 19:35:01,337 [INFO] trainer.py:67 epoch: 22,                 train_loss is 0.913,                 train_accuracy is 0.991,                 test_accuracy is 0.912 -system
+2022-08-03 19:37:04,896 [INFO] trainer.py:67 epoch: 23,                 train_loss is 0.914,                 train_accuracy is 0.991,                 test_accuracy is 0.912 -system
+2022-08-03 19:39:10,001 [INFO] trainer.py:67 epoch: 24,                 train_loss is 0.914,                 train_accuracy is 0.990,                 test_accuracy is 0.915 -system
+2022-08-03 19:41:14,084 [INFO] trainer.py:67 epoch: 25,                 train_loss is 0.913,                 train_accuracy is 0.991,                 test_accuracy is 0.908 -system
+2022-08-03 19:43:10,551 [INFO] trainer.py:67 epoch: 26,                 train_loss is 0.917,                 train_accuracy is 0.987,                 test_accuracy is 0.912 -system
+2022-08-03 19:45:05,880 [INFO] trainer.py:67 epoch: 27,                 train_loss is 0.913,                 train_accuracy is 0.991,                 test_accuracy is 0.914 -system
+2022-08-03 19:46:59,825 [INFO] trainer.py:67 epoch: 28,                 train_loss is 0.916,                 train_accuracy is 0.988,                 test_accuracy is 0.809 -system
+2022-08-03 19:48:56,517 [INFO] trainer.py:67 epoch: 29,                 train_loss is 0.913,                 train_accuracy is 0.991,                 test_accuracy is 0.895 -system
+2022-08-03 19:50:52,205 [INFO] trainer.py:67 epoch: 30,                 train_loss is 0.914,                 train_accuracy is 0.990,                 test_accuracy is 0.865 -system
+2022-08-03 19:50:52,206 [INFO] trainer.py:69 5677.3 examples/sec on cuda:0 -system

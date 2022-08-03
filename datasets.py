@@ -274,7 +274,7 @@ class OneHot(object):
     def attack(self):
         return self.__attack_one_hot
 
-class OneHotLoader:
+class DataLoader:
     def __init__(self, src) -> None:
         self.src = src
         self.mid = src + '.onehot.mid'
@@ -339,53 +339,3 @@ class OneHotLoader:
         # 交叉熵会自动将输入标签转换为独热码，这里不需要处理
         nline.append(assial.value)
         return nline
-
-
-class DataLoader:
-    def __init__(self, src) -> None:
-        self.src = src
-        self.dst = src + '.data'
-
-    def load(self, cover = False):
-        while os.path.exists(self.dst):
-            if not cover:
-                data = np.genfromtxt(self.dst, delimiter=',')
-                return data[:,:-1], data[:, -1]
-            os.remove(self.dst)
-        self.transform()
-        data = np.genfromtxt(self.dst, delimiter=',')
-        return data[:,:-1], data[:, -1]
-
-    def transform(self):
-        log.info('>>> Start property mapping ...')
-        # newline用于解决空行问题
-        o_dst = open(self.dst, 'w', newline='')
-        with open(self.src, 'r') as o_src:
-            csv_reader = csv.reader(o_src)
-            csv_writer = csv.writer(o_dst)
-            self.rows = 0
-            for row in csv_reader:
-                # 类型转换
-                line = DataLoader._transform(row)
-                csv_writer.writerow(line)
-                self.rows += 1
-            o_dst.close()
-        log.info('>>> End property mapping ...')
-    @staticmethod
-    def _transform(line):
-        # 字符型 ===> 枚举值
-        protocol = Procotol.fromName(line[1])
-        ## 测试集有两条icmp的非法数据，需要删掉
-        service = Service.fromName(line[2])
-        flag = Flag.fromName(line[3])
-        # attack = Attack.fromName(line[-1][:-1])
-        assial = Assail.toAssail(line[-1][:-1])
-        # 枚举值 ===> 枚举值
-        nline = []              # 这里丢弃line[0]
-        nline.append(protocol.value)
-        nline.append(service.value)
-        nline.append(flag.value)
-        nline.extend(line[4:-1])
-        nline.append(assial.value)
-        return nline
-   
