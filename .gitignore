@@ -1,5 +1,5 @@
 __pycache__
 .vscode
-datasets
-datasets2
 venv
+datasets*
+!*py

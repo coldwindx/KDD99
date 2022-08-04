@@ -67,3 +67,20 @@
 2022-08-03 19:48:56,517 [INFO] trainer.py:67 epoch: 29,                 train_loss is 0.913,                 train_accuracy is 0.991,                 test_accuracy is 0.895 -system
 2022-08-03 19:50:52,205 [INFO] trainer.py:67 epoch: 30,                 train_loss is 0.914,                 train_accuracy is 0.990,                 test_accuracy is 0.865 -system
 2022-08-03 19:50:52,206 [INFO] trainer.py:69 5677.3 examples/sec on cuda:0 -system
+2022-08-04 15:20:28,507 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-04 15:22:25,558 [INFO] datasets.py:306 >>> End property mapping ... -system
+2022-08-04 15:22:25,558 [INFO] datasets.py:309 >>> Start normalizating ... -system
+2022-08-04 15:26:07,464 [INFO] datasets.py:320 >>> End normalizating ... -system
+2022-08-04 15:26:07,695 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-04 15:27:30,655 [INFO] datasets.py:306 >>> End property mapping ... -system
+2022-08-04 15:27:30,781 [INFO] datasets.py:309 >>> Start normalizating ... -system
+2022-08-04 15:29:13,098 [INFO] datasets.py:320 >>> End normalizating ... -system
+2022-08-04 15:51:54,043 [INFO] svm.py:19 The accuracy using SVM is 0.8160963517636732 -system
+2022-08-04 16:09:03,427 [INFO] datasets1.py:19 >>> Start downloading kddcup.data_10_percent.gz from http://kdd.ics.uci.edu/databases/kddcup99/ -system
+2022-08-04 16:09:08,578 [INFO] datasets1.py:28 >>> Start unzipping the file kddcup.data_10_percent.gz -system
+2022-08-04 16:11:24,897 [INFO] datasets1.py:20 >>> Start downloading kddcup.data_10_percent.gz from http://kdd.ics.uci.edu/databases/kddcup99/ -system
+2022-08-04 16:11:29,882 [INFO] datasets1.py:29 >>> Start unzipping the file kddcup.data_10_percent.gz -system
+2022-08-04 16:11:30,855 [INFO] datasets1.py:35 Success to downloading ./datasets/kddcup.data_10_percent -system
+2022-08-04 16:13:42,601 [INFO] datasets1.py:22 >>> Start downloading corrected.gz from http://kdd.ics.uci.edu/databases/kddcup99/ -system
+2022-08-04 16:14:20,549 [INFO] datasets1.py:31 >>> Start unzipping the file corrected.gz -system
+2022-08-04 16:14:21,357 [INFO] datasets1.py:37 Success to downloading ./datasets/corrected -system
