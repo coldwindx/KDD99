@@ -104,6 +104,8 @@ class Trainer:
                 plugin.before_return(self.metrics, timer, self.device)
     
     def _train(self):
+        # 使用小批量梯度下降，batch_size = 64, 128, 256, 512
+        # 确保每个(X, y)大小可以装入CPU/GPU
         for (X, y) in self.data:
             X, y = X.to(self.device), y.to(self.device)
             self.optimizer.zero_grad()

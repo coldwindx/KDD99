@@ -84,3 +84,16 @@
 2022-08-04 16:13:42,601 [INFO] datasets1.py:22 >>> Start downloading corrected.gz from http://kdd.ics.uci.edu/databases/kddcup99/ -system
 2022-08-04 16:14:20,549 [INFO] datasets1.py:31 >>> Start unzipping the file corrected.gz -system
 2022-08-04 16:14:21,357 [INFO] datasets1.py:37 Success to downloading ./datasets/corrected -system
+2022-08-05 19:06:28,506 [INFO] datasets.py:293 >>> Start property mapping ... -system
+2022-08-05 22:45:54,080 [INFO] trainer.py:67 epoch: 1,                 train_loss is 1.598,                 train_accuracy is 0.398,                 test_accuracy is 0.195 -system
+2022-08-05 22:46:17,077 [INFO] trainer.py:67 epoch: 2,                 train_loss is 1.917,                 train_accuracy is 0.146,                 test_accuracy is 0.195 -system
+2022-08-05 22:46:40,050 [INFO] trainer.py:67 epoch: 3,                 train_loss is 1.918,                 train_accuracy is 0.145,                 test_accuracy is 0.195 -system
+2022-08-05 22:47:03,236 [INFO] trainer.py:67 epoch: 4,                 train_loss is 1.918,                 train_accuracy is 0.145,                 test_accuracy is 0.195 -system
+2022-08-05 22:47:26,913 [INFO] trainer.py:67 epoch: 5,                 train_loss is 1.918,                 train_accuracy is 0.145,                 test_accuracy is 0.195 -system
+2022-08-05 22:47:26,914 [INFO] trainer.py:69 27348.3 examples/sec on cuda:0 -system
+2022-08-05 22:50:02,841 [INFO] trainer.py:67 epoch: 1,                 train_loss is 1.113,                 train_accuracy is 0.779,                 test_accuracy is 0.739 -system
+2022-08-05 22:51:36,058 [INFO] trainer.py:67 epoch: 2,                 train_loss is 1.113,                 train_accuracy is 0.792,                 test_accuracy is 0.739 -system
+2022-08-05 22:53:13,757 [INFO] trainer.py:67 epoch: 3,                 train_loss is 1.113,                 train_accuracy is 0.792,                 test_accuracy is 0.739 -system
+2022-08-05 22:54:48,698 [INFO] trainer.py:67 epoch: 4,                 train_loss is 1.113,                 train_accuracy is 0.792,                 test_accuracy is 0.739 -system
+2022-08-05 22:56:31,157 [INFO] trainer.py:67 epoch: 5,                 train_loss is 1.113,                 train_accuracy is 0.792,                 test_accuracy is 0.739 -system
+2022-08-05 22:56:31,446 [INFO] trainer.py:69 7125.1 examples/sec on cuda:0 -system
