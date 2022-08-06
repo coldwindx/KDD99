@@ -1,11 +1,16 @@
 import os
-import csv
+import gzip
 import logging
+import requests
 import numpy as np
+import pandas as pd
 
+import logging.config
 from enum import Enum, unique
 
+logging.config.fileConfig(fname='./config/log.init', disable_existing_loggers=False)
 log = logging.getLogger('system')
+
 
 @unique
 class Procotol(Enum):
@@ -149,46 +154,46 @@ class Assail(Enum):
     @staticmethod
     def toAssail(attack):
         relation = {
-            'normal'            : Assail.NORMAL,
-            'ipsweep'            : Assail.PROBE,
- 	        'mscan'             : Assail.PROBE,
- 	        'nmap'              : Assail.PROBE,
- 	        'portsweep'         : Assail.PROBE,
- 	        'saint'             : Assail.PROBE,
- 	        'satan'             : Assail.PROBE,
-            'apache2'           : Assail.DOS,
-            'back'              : Assail.DOS,
-            'land'              : Assail.DOS,
-            'mailbomb'          : Assail.DOS,
-            'neptune'           : Assail.DOS,
-            'pod'               : Assail.DOS,
-            'processtable'      : Assail.DOS,
-            'smurf'             : Assail.DOS,
-            'teardrop'          : Assail.DOS,
-            'udpstorm'          : Assail.DOS,
-            'buffer_overflow'   : Assail.U2R,
-            'httptunnel'        : Assail.U2R,
-            'loadmodule'        : Assail.U2R,
-            'perl'              : Assail.U2R,
-            'ps'                : Assail.U2R,
-            'rootkit'           : Assail.U2R,
-            'sqlattack'         : Assail.U2R,
-            'xterm'             : Assail.U2R,
-            'ftp_write'         : Assail.R2L,
-            'guess_passwd'      : Assail.R2L,
-            'imap'              : Assail.R2L,
-            'multihop'          : Assail.R2L,
-            'named'             : Assail.R2L,
-            'phf'               : Assail.R2L,
-            'sendmail'          : Assail.R2L,
-            'snmpgetattack'     : Assail.R2L,
-            'snmpguess'         : Assail.R2L,
-            'spy'               : Assail.R2L,
-            'warezclient'       : Assail.R2L,
-            'warezmaster'       : Assail.R2L,
-            'worm'              : Assail.R2L,
-            'xlock'             : Assail.R2L,
-            'xsnoop'            : Assail.R2L
+            'normal.'            : Assail.NORMAL,
+            'ipsweep.'            : Assail.PROBE,
+ 	        'mscan.'             : Assail.PROBE,
+ 	        'nmap.'              : Assail.PROBE,
+ 	        'portsweep.'         : Assail.PROBE,
+ 	        'saint.'             : Assail.PROBE,
+ 	        'satan.'             : Assail.PROBE,
+            'apache2.'           : Assail.DOS,
+            'back.'              : Assail.DOS,
+            'land.'              : Assail.DOS,
+            'mailbomb.'          : Assail.DOS,
+            'neptune.'           : Assail.DOS,
+            'pod.'               : Assail.DOS,
+            'processtable.'      : Assail.DOS,
+            'smurf.'             : Assail.DOS,
+            'teardrop.'          : Assail.DOS,
+            'udpstorm.'          : Assail.DOS,
+            'buffer_overflow.'   : Assail.U2R,
+            'httptunnel.'        : Assail.U2R,
+            'loadmodule.'        : Assail.U2R,
+            'perl.'              : Assail.U2R,
+            'ps.'                : Assail.U2R,
+            'rootkit.'           : Assail.U2R,
+            'sqlattack.'         : Assail.U2R,
+            'xterm.'             : Assail.U2R,
+            'ftp_write.'         : Assail.R2L,
+            'guess_passwd.'      : Assail.R2L,
+            'imap.'              : Assail.R2L,
+            'multihop.'          : Assail.R2L,
+            'named.'             : Assail.R2L,
+            'phf.'               : Assail.R2L,
+            'sendmail.'          : Assail.R2L,
+            'snmpgetattack.'     : Assail.R2L,
+            'snmpguess.'         : Assail.R2L,
+            'spy.'               : Assail.R2L,
+            'warezclient.'       : Assail.R2L,
+            'warezmaster.'       : Assail.R2L,
+            'worm.'              : Assail.R2L,
+            'xlock.'             : Assail.R2L,
+            'xsnoop.'            : Assail.R2L
         }
         return relation[attack]
 
@@ -274,68 +279,60 @@ class OneHot(object):
     def attack(self):
         return self.__attack_one_hot
 
-class DataLoader:
-    def __init__(self, src) -> None:
-        self.src = src
-        self.mid = src + '.onehot.mid'
-        self.dst = src + '.onehot'
+class Loader:
+    URL = 'http://kdd.ics.uci.edu/databases/kddcup99/'
+    SAVE_PATH = './datasets/'
 
-    def load(self, cover = False):
-        while os.path.exists(self.dst):
-            if not cover:
-                data = np.genfromtxt(self.dst, delimiter=',')
-                return data[:,:-1], data[:, -1]
-            os.remove(self.dst)
-        self.transform()
-        return self.normalizate()
+    def __init__(self) -> None:
+        if not os.path.exists(Loader.SAVE_PATH + 'kddcup.data_10_percent'):
+            self._download('kddcup.data_10_percent')
+        if not os.path.exists(Loader.SAVE_PATH + 'corrected'):
+            self._download('corrected')
 
-    def transform(self):
-        log.info('>>> Start property mapping ...')
-        # newline用于解决空行问题
-        o_mid = open(self.mid, 'w', newline='')
-        with open(self.src, 'r') as o_src:
-            csv_reader = csv.reader(o_src)
-            csv_writer = csv.writer(o_mid)
-            self.rows = 0
-            for row in csv_reader:
-                # 类型转换
-                line = DataLoader._transform(row)
-                csv_writer.writerow(line)
-                self.rows += 1
-            o_mid.close()
-        log.info('>>> End property mapping ...')
+    def load(self):
+        def __load(filename):
+            data = pd.read_csv(filename, sep=',', header=None,
+                                names=['duration','protocol_type','service','flag','src_bytes','dst_bytes','land','wrong_fragment','urgent','hot','num_failed_logins','logged_in','num_compromised','root_shell','su_attempted','num_root','num_file_creations','num_shells','num_access_files','num_outbound_cmds','is_hot_login','is_guest_login','count','srv_count','serror_rate','srv_serror_rate','rerror_rate','srv_rerror_rate','same_srv_rate','diff_srv_rate','srv_diff_host_rate','dst_host_count','dst_host_srv_count','dst_host_same_srv_rate','dst_host_diff_srv_rate','dst_host_same_src_port_rate','dst_host_srv_diff_host_rate','dst_host_serror_rate','dst_host_srv_serror_rate','dst_host_rerror_rate','dst_host_srv_rerror_rate','label'])
+            # 数据清洗
+            data.drop(index=data[data['service'] == 'icmp'].index, inplace=True)
+            data.pop('duration')
+            # 独热码
+            protocol = pd.CategoricalDtype(categories=Procotol._member_names_, ordered=False)
+            service = pd.CategoricalDtype(categories=Service._member_names_, ordered=False)
+            flag = pd.CategoricalDtype(categories=Flag._member_names_, ordered=False)
 
-    def normalizate(self):
-        log.info('>>> Start normalizating ...')
-        data = np.genfromtxt(self.mid, delimiter=',')
-        features, labels = data[:,:-1], data[:, -1]
-        dmax, dmin = np.max(features, axis=1), np.min(features, axis=1)
-        dmax, dmin = dmax.reshape((-1, 1)), dmin.reshape((-1, 1))
-        features = (features - dmin) / (dmax - dmin)
-        data = np.c_[features, labels]
-        # 不使用numpy.savetxt，数据膨胀严重(200M ---> 1.5G)
-        o_dst = open(self.dst, 'w', newline='')
-        csv_writer = csv.writer(o_dst)
-        csv_writer.writerows(data.tolist())
-        log.info('>>> End normalizating ...')
-        return (features, labels)
+            data['protocol_type'] = data['protocol_type'].astype(protocol)
+            data['service'] = data['service'].astype(service)
+            data['flag'] = data['flag'].astype(flag)
 
-    @staticmethod
-    def _transform(line):
-        # 字符型 ===> 枚举值
-        protocol = Procotol.fromName(line[1])
-        ## 测试集有两条icmp的非法数据，需要删掉
-        service = Service.fromName(line[2])
-        flag = Flag.fromName(line[3])
-        # attack = Attack.fromName(line[-1][:-1])
-        assial = Assail.toAssail(line[-1][:-1])
-        # 枚举值 ===> 独热码
-        onehot = OneHot()
-        nline = []              # 这里丢弃line[0]
-        nline.extend(onehot.protocol[protocol.value - 1])
-        nline.extend(onehot.service[service.value - 1])
-        nline.extend(onehot.flag[flag.value])
-        nline.extend(line[4:-1])
-        # 交叉熵会自动将输入标签转换为独热码，这里不需要处理
-        nline.append(assial.value)
-        return nline
+            data = pd.get_dummies(data, columns=['protocol_type', 'service', 'flag'])
+            # 标签，调整至最后一列
+            data['label'] = data['label'].apply(lambda x: Assail.toAssail(x).value)
+            data.insert(loc = data.shape[1] - 1, column='label', value=data.pop('label'), allow_duplicates=False)
+            return data
+        train_data = __load(Loader.SAVE_PATH + 'kddcup.data_10_percent')
+        test_data = __load(Loader.SAVE_PATH + 'corrected')
+        return np.array(train_data), np.array(test_data)
+
+    def _download(self, filename):
+        # 下载数据
+        log.info(f'>>> Start downloading {filename}.gz from {Loader.URL}')
+        url = Loader.URL + filename + '.gz'
+        rsp = requests.get(url)
+        if rsp.status_code != 200:
+            raise Exception(f'>>> Failed to download data from {url}, http status: {rsp.status_code}')
+        with open(Loader.SAVE_PATH + filename + '.gz', 'wb') as f:
+            f.write(rsp.content)
+            f.close()
+        # 解压数据
+        log.info(f'>>> Start unzipping the file {filename}.gz')
+        zip = gzip.GzipFile(Loader.SAVE_PATH + filename + '.gz')    
+        open(Loader.SAVE_PATH + filename, "wb+").write(zip.read())
+        zip.close()
+        # 删除无用压缩包
+        os.remove(Loader.SAVE_PATH + filename + '.gz')
+        log.info(f'Success to downloading {Loader.SAVE_PATH}{filename}')
+
+if __name__ == '__main__':
+    loader = Loader()
+    train_data, test_data = loader.load()

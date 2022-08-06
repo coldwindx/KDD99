@@ -1,4 +1,4 @@
-import datasets2
+import datasets
 import logging.config
 
 import pydotplus
@@ -7,7 +7,7 @@ from sklearn import tree
 if __name__ == '__main__':
     logging.config.fileConfig(fname='./config/log.init', disable_existing_loggers=False)
 
-    train_data, test_data = datasets2.Loader().load()
+    train_data, test_data = datasets.Loader().load()
     train_features, train_labels = train_data[:,:-1], train_data[:,-1]
     test_features, test_labels = test_data[:,:-1], test_data[:,-1]
 
