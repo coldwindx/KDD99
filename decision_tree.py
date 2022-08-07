@@ -19,6 +19,7 @@ if __name__ == '__main__':
     # predict_result = clf.predict(test_features)
     scores = clf.score(test_features, test_labels)
     print(scores)
+    # 0.9257652872580194
     # 导出决策树结构
     dot = tree.export_graphviz(clf, out_file=None)  # 默认导出.dot文件
     graph = pydotplus.graph_from_dot_data(dot)
