@@ -32,7 +32,7 @@ class Plugin():
     def before_return(self):
         raise NotImplementedError
 
-class AccuractPlugin(Plugin):
+class AccuracyPlugin(Plugin):
     def __init__(self, metrics) -> None:
         super().__init__()
         metrics['train_accuracy_sum'] = 0.0
@@ -44,7 +44,7 @@ class AccuractPlugin(Plugin):
 
     def position(self) -> int:
         return  Plugin.ALL
-    def after_one_batch_train(self, metrics, o, y, loss):
+    def after_one_batch_train(self, metrics, o, y, loss, batch):
         metrics['train_accuracy_sum'] += utils.accuracy(o, y)
         metrics['train_data_size'] += y.numel()
         metrics['train_data_size_sum'] += y.numel()
@@ -76,7 +76,7 @@ class Trainer:
         self.device = device
         self.iterations = 0
         self.metrics = DefaultDict(str)
-        self.plugins = [AccuractPlugin(self.metrics)]
+        self.plugins = [AccuracyPlugin(self.metrics)]
 
     def fit(self, data, test, batch_size = 64):
         (train_features, train_labels) = data
@@ -87,6 +87,7 @@ class Trainer:
         test = torch.utils.data.TensorDataset(test_features, test_labels)
         self.test = torch.utils.data.DataLoader(test, batch_size=batch_size, shuffle=True)
 
+        self.metrics['train_batchs'] = len(self.data)
     def train(self, epochs = 1):
         timer = utils.Timer()
         for i in range(1, epochs + 1):
@@ -106,7 +107,7 @@ class Trainer:
     def _train(self):
         # 使用小批量梯度下降，batch_size = 64, 128, 256, 512
         # 确保每个(X, y)大小可以装入CPU/GPU
-        for (X, y) in self.data:
+        for i, (X, y) in enumerate(self.data):
             X, y = X.to(self.device), y.to(self.device)
             self.optimizer.zero_grad()
             o = self.net(X)
@@ -116,7 +117,7 @@ class Trainer:
             with torch.no_grad():
                 for plugin in self.plugins:
                     if (plugin.position() & Plugin.AFTER_ONE_BATCH_TRAIN):
-                        plugin.after_one_batch_train(self.metrics, o, y, l * X.shape[0])
+                        plugin.after_one_batch_train(self.metrics, o, y, l * X.shape[0], i)
         for plugin in self.plugins:
             if (plugin.position() & Plugin.AFTER_ONE_EPOCH_TRAIN):
                 plugin.after_one_epoch_train(self.metrics)
@@ -133,3 +134,6 @@ class Trainer:
         for plugin in self.plugins:
             if (plugin.position() & Plugin.AFTER_ONE_EPOCH_TEST):
                 plugin.after_one_epoch_test(self.metrics)
+    
+    def register(self, plugin):
+        self.plugins.append(plugin)

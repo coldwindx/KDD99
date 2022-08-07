@@ -97,3 +97,7 @@
 2022-08-05 22:54:48,698 [INFO] trainer.py:67 epoch: 4,                 train_loss is 1.113,                 train_accuracy is 0.792,                 test_accuracy is 0.739 -system
 2022-08-05 22:56:31,157 [INFO] trainer.py:67 epoch: 5,                 train_loss is 1.113,                 train_accuracy is 0.792,                 test_accuracy is 0.739 -system
 2022-08-05 22:56:31,446 [INFO] trainer.py:69 7125.1 examples/sec on cuda:0 -system
+2022-08-07 15:13:12,283 [INFO] trainer.py:67 epoch: 1,                 train_loss is 0.927,                 train_accuracy is 0.977,                 test_accuracy is 0.907 -system
+2022-08-07 15:13:49,551 [INFO] trainer.py:67 epoch: 2,                 train_loss is 0.919,                 train_accuracy is 0.985,                 test_accuracy is 0.907 -system
+2022-08-07 15:14:28,959 [INFO] trainer.py:67 epoch: 3,                 train_loss is 0.919,                 train_accuracy is 0.985,                 test_accuracy is 0.907 -system
+2022-08-07 15:14:29,075 [INFO] trainer.py:69 15081.6 examples/sec on cuda:0 -system

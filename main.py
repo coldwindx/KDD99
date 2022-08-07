@@ -20,6 +20,28 @@ import logging.config
 import torch.utils.data
 
 # http://kdd.ics.uci.edu/databases/kddcup99/kddcup99.html
+from matplotlib import pyplot as plt
+from trainer import Plugin
+# 动态绘图的Demo
+class AccuracyCurvePlugin(Plugin):
+    def __init__(self, metrics) -> None:
+        super().__init__()
+        metrics['train_accuracy_y'] = []
+        metrics['train_accuracy_x'] = [] 
+        metrics['current_epoch'] = 0
+
+    def position(self) -> int:
+        return  Plugin.AFTER_ONE_BATCH_TRAIN | Plugin.AFTER_ONE_EPOCH_TRAIN | Plugin.BEFORE_RETURN
+    def after_one_batch_train(self, metrics, o, y, loss, batch):
+        metrics['train_accuracy_y'].append(utils.accuracy(o, y) / y.numel())
+        metrics['train_accuracy_x'].append(metrics['current_epoch'] + batch / metrics['train_batchs'])
+        plt.plot(metrics['train_accuracy_x'], metrics['train_accuracy_y'])
+        plt.pause(1.0)
+    def after_one_epoch_train(self, metrics):
+        metrics['current_epoch'] += 1
+
+    def before_return(self, metrics, timer, device):
+        plt.show()
 
 if __name__ == '__main__':
     logging.config.fileConfig(fname='./config/log.init', disable_existing_loggers=False)
@@ -50,6 +72,8 @@ if __name__ == '__main__':
         device=device
     )
     trainer.fit((train_features, train_labels), (test_features, test_labels), batch_size=128)
+
+    # trainer.register(AccuracyCurvePlugin(trainer.metrics))
     trainer.train(epochs=3)
 
     torch.save(net.state_dict(), './module/conv.mod')
