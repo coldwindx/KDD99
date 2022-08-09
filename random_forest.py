@@ -20,4 +20,4 @@ print(scores)
 # n_estimators=10, score = 0.9243313281483602
 # n_estimators=20, score = 0.9239776611033769
 # n_estimators=50, score = 0.925189774521183
-# n_estimators=20, score = 0.9256077446652542
+# n_estimators=100, score = 0.9256077446652542
