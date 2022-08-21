@@ -2,6 +2,7 @@ import os
 import gzip
 import logging
 import requests
+import rarfile
 import numpy as np
 import pandas as pd
 
@@ -279,14 +280,15 @@ class OneHot(object):
     def attack(self):
         return self.__attack_one_hot
 
+SAVE_PATH = './datasets/'
+
 class Loader:
     URL = 'http://kdd.ics.uci.edu/databases/kddcup99/'
-    SAVE_PATH = './datasets/'
 
     def __init__(self) -> None:
-        if not os.path.exists(Loader.SAVE_PATH + 'kddcup.data_10_percent'):
+        if not os.path.exists(SAVE_PATH + 'kddcup.data_10_percent'):
             self._download('kddcup.data_10_percent')
-        if not os.path.exists(Loader.SAVE_PATH + 'corrected'):
+        if not os.path.exists(SAVE_PATH + 'corrected'):
             self._download('corrected')
 
     def load(self):
@@ -333,6 +335,60 @@ class Loader:
         os.remove(Loader.SAVE_PATH + filename + '.gz')
         log.info(f'Success to downloading {Loader.SAVE_PATH}{filename}')
 
+class Csic:
+    URL = 'https://www.tic.itefi.csic.es/dataset/'
+    def __init__(self) -> None:
+        if not os.path.exists(SAVE_PATH + 'normalTrafficTraining.txt'):
+            self._download('normalTrafficTraining.txt')
+        if not os.path.exists(SAVE_PATH + 'normalTrafficTest.txt'):
+            self._download('normalTrafficTest')
+        if not os.path.exists(SAVE_PATH + 'anomalousTrafficTest.txt'):
+            self._download('anomalousTrafficTest')
+    def _download(self, filename):
+        # 下载数据
+        log.info(f'>>> Start downloading {filename}.rar from {Csic.URL}')
+        url = Csic.URL + filename + '.rar'
+        rsp = requests.get(url)
+        if rsp.status_code != 200:
+            raise Exception(f'>>> Failed to download data from {url}, http status: {rsp.status_code}')
+        with open(SAVE_PATH + filename + '.rar', 'wb') as f:
+            f.write(rsp.content)
+            f.close()
+        # 解压数据
+        log.info(f'>>> Start unzipping the file {filename}.rar')
+        rar = rarfile.RarFile(SAVE_PATH + filename + '.rar')  
+        rar.extractall(SAVE_PATH)
+        # 删除无用压缩包
+        os.remove(SAVE_PATH + filename + '.rar')
+        log.info(f'Success to downloading {SAVE_PATH}{filename}')
+
+    def load(self):
+        def _load(filename):
+            with open(filename, 'r') as f:
+                lines = f.readlines()
+            ans = []
+            for i in range(len(lines)):
+                line = lines[i].strip()
+                ls = line.split(' ')
+                if line.startswith('GET'):
+                    ans.append('GET ' + ls[1])
+                    continue
+                if line.startswith('POST') or line.startswith('PUT'):
+                    method, url = ls[0], ls[1]
+                    j = 1
+                    while True:
+                        if lines[i + j].startswith('Content-Length'):
+                            break
+                        j += 1
+                    j += 2
+                    data = lines[i + j].strip()
+                    ans.append(method + ' ' + url + '?' + data)
+            return ans
+        
+        train = _load(SAVE_PATH + 'normalTrafficTraining.txt')
+        normal = _load(SAVE_PATH + 'normalTrafficTest.txt')
+        anomalous = _load(SAVE_PATH + 'anomalousTrafficTest.txt')
+        return (train, normal, anomalous)
+
 if __name__ == '__main__':
-    loader = Loader()
-    train_data, test_data = loader.load()
+    Csic()
